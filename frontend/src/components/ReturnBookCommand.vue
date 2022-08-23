@@ -2,7 +2,7 @@
 
     <v-card outlined>
         <v-card-title>
-            Return
+            ReturnBook
         </v-card-title>
 
         <v-card-text>
@@ -13,9 +13,9 @@
             <v-btn
                     color="deep-purple lighten-2"
                     text
-                    @click="return"
+                    @click="returnBook"
             >
-                Return
+                ReturnBook
             </v-btn>
             
             <v-btn
@@ -33,7 +33,7 @@
 <script>
    
     export default {
-        name: 'ReturnCommand',
+        name: 'ReturnBookCommand',
         components:{},
         props: {},
         data: () => ({
@@ -45,8 +45,8 @@
         watch: {
         },
         methods: {
-            return() {
-                this.$emit('return', this.value);
+            returnBook() {
+                this.$emit('returnBook', this.value);
             },
             close() {
                 this.$emit('closeDialog');
