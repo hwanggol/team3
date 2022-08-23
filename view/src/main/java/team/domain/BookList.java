@@ -6,14 +6,13 @@ import java.util.Date;
 import lombok.Data;
 
 @Entity
-@Table(name="List_table")
+@Table(name="BookList_table")
 @Data
-public class List {
+public class BookList {
 
         @Id
         //@GeneratedValue(strategy=GenerationType.AUTO)
         private Long id;
-        private Long bookId;
         private String bookStatus;
         private String bookName;
 

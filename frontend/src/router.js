@@ -15,8 +15,8 @@ import PointManager from "./components/listers/PointCards"
 import PointDetail from "./components/listers/PointDetail"
 
 
-import ListView from "./components/ListView"
-import ListViewDetail from "./components/ListViewDetail"
+import BookListView from "./components/BookListView"
+import BookListViewDetail from "./components/BookListViewDetail"
 
 export default new Router({
     // mode: 'history',
@@ -57,14 +57,14 @@ export default new Router({
 
 
             {
-                path: '/lists',
-                name: 'ListView',
-                component: ListView
+                path: '/bookLists',
+                name: 'BookListView',
+                component: BookListView
             },
             {
-                path: '/lists/:id',
-                name: 'ListViewDetail',
-                component: ListViewDetail
+                path: '/bookLists/:id',
+                name: 'BookListViewDetail',
+                component: BookListViewDetail
             },
 
 

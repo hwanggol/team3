@@ -2,7 +2,7 @@
 
     <v-data-table
         :headers="headers"
-        :items="list"
+        :items="bookList"
         :items-per-page="5"
         class="elevation-1"
     ></v-data-table>
@@ -13,7 +13,7 @@
     const axios = require('axios').default;
 
     export default {
-        name: 'ListView',
+        name: 'BookListView',
         props: {
             value: Object,
             editMode: Boolean,
@@ -22,18 +22,17 @@
         data: () => ({
             headers: [
                 { text: "id", value: "id" },
-                { text: "bookId", value: "bookId" },
                 { text: "bookStatus", value: "bookStatus" },
                 { text: "bookName", value: "bookName" },
             ],
-            list : [],
+            bookList : [],
         }),
           async created() {
-            var temp = await axios.get(axios.fixUrl('/lists'))
+            var temp = await axios.get(axios.fixUrl('/bookLists'))
 
-            temp.data._embedded.lists.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
+            temp.data._embedded.bookLists.map(obj => obj.id=obj._links.self.href.split("/")[obj._links.self.href.split("/").length - 1])
 
-            this.list = temp.data._embedded.lists;
+            this.bookList = temp.data._embedded.bookLists;
         },
         methods: {
         }

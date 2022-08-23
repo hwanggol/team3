@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ListViewHandler {
+public class BookListViewHandler {
 
 
     @Autowired
-    private ListRepository listRepository;
+    private BookListRepository bookListRepository;
 
     @StreamListener(KafkaProcessor.INPUT)
     public void whenRegistered_then_CREATE_1 (@Payload Registered registered) {
@@ -25,12 +25,12 @@ public class ListViewHandler {
             if (!registered.validate()) return;
 
             // view 객체 생성
-            List list = new List();
+            BookList bookList = new BookList();
             // view 객체에 이벤트의 Value 를 set 함
-            list.setId(registered.getId());
-            list.setBookName(registered.getBookName());
+            bookList.setId(registered.getId());
+            bookList.setBookName(registered.getBookName());
             // view 레파지 토리에 save
-            listRepository.save(list);
+            bookListRepository.save(bookList);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -43,14 +43,16 @@ public class ListViewHandler {
         try {
             if (!reserved.validate()) return;
                 // view 객체 조회
+            Optional<BookList> bookListOptional = bookListRepository.findById(reserved.getBookId());
 
-                List<List> listList = listRepository.findByBookId(reserved.getBookId());
-                for(List list : listList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    list.setBookStatus("예약됨");
+            if( bookListOptional.isPresent()) {
+                 BookList bookList = bookListOptional.get();
+            // view 객체에 이벤트의 eventDirectValue 를 set 함
+                bookList.setBookStatus("예약됨");    
                 // view 레파지 토리에 save
-                listRepository.save(list);
+                 bookListRepository.save(bookList);
                 }
+
 
         }catch (Exception e){
             e.printStackTrace();
@@ -61,14 +63,16 @@ public class ListViewHandler {
         try {
             if (!rented.validate()) return;
                 // view 객체 조회
+            Optional<BookList> bookListOptional = bookListRepository.findById(rented.getBookId());
 
-                List<List> listList = listRepository.findByBookId(rented.getBookId());
-                for(List list : listList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    list.setBookStatus("대여됨");
+            if( bookListOptional.isPresent()) {
+                 BookList bookList = bookListOptional.get();
+            // view 객체에 이벤트의 eventDirectValue 를 set 함
+                bookList.setBookStatus("대여됨");    
                 // view 레파지 토리에 save
-                listRepository.save(list);
+                 bookListRepository.save(bookList);
                 }
+
 
         }catch (Exception e){
             e.printStackTrace();
@@ -79,14 +83,16 @@ public class ListViewHandler {
         try {
             if (!canceled.validate()) return;
                 // view 객체 조회
+            Optional<BookList> bookListOptional = bookListRepository.findById(canceled.getBookId());
 
-                List<List> listList = listRepository.findByBookId(canceled.getBookId());
-                for(List list : listList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    list.setBookStatus("예약취소됨");
+            if( bookListOptional.isPresent()) {
+                 BookList bookList = bookListOptional.get();
+            // view 객체에 이벤트의 eventDirectValue 를 set 함
+                bookList.setBookStatus("예약취소됨");    
                 // view 레파지 토리에 save
-                listRepository.save(list);
+                 bookListRepository.save(bookList);
                 }
+
 
         }catch (Exception e){
             e.printStackTrace();
@@ -97,14 +103,16 @@ public class ListViewHandler {
         try {
             if (!returned.validate()) return;
                 // view 객체 조회
+            Optional<BookList> bookListOptional = bookListRepository.findById(returned.getBookId());
 
-                List<List> listList = listRepository.findByBookId(returned.getBookId());
-                for(List list : listList){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    list.setBookStatus("반납됨");
+            if( bookListOptional.isPresent()) {
+                 BookList bookList = bookListOptional.get();
+            // view 객체에 이벤트의 eventDirectValue 를 set 함
+                bookList.setBookStatus("반납됨");    
                 // view 레파지 토리에 save
-                listRepository.save(list);
+                 bookListRepository.save(bookList);
                 }
+
 
         }catch (Exception e){
             e.printStackTrace();

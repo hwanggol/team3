@@ -23,7 +23,7 @@ spring:
         - id: view
           uri: http://localhost:8084
           predicates:
-            - Path=, /lists/**
+            - Path=, /bookLists/**
         - id: frontend
           uri: http://localhost:8080
           predicates:
@@ -62,7 +62,7 @@ spring:
         - id: view
           uri: http://view:8080
           predicates:
-            - Path=, /lists/**
+            - Path=, /bookLists/**
         - id: frontend
           uri: http://frontend:8080
           predicates:

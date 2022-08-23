@@ -5,11 +5,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 
-@RepositoryRestResource(collectionResourceRel="lists", path="lists")
-public interface ListRepository extends PagingAndSortingRepository<List, Long> {
+@RepositoryRestResource(collectionResourceRel="bookLists", path="bookLists")
+public interface BookListRepository extends PagingAndSortingRepository<BookList, Long> {
 
-    List<List> findByBookId(Long bookId);
-
+    
 
     
 
