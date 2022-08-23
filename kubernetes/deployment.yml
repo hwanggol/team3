@@ -3,22 +3,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order
+  name: bookRental
   labels:
-    app: order
+    app: bookRental
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: order
+      app: bookRental
   template:
     metadata:
       labels:
-        app: order
+        app: bookRental
     spec:
       containers:
-        - name: order
-          image: username/order:latest
+        - name: bookRental
+          image: username/bookRental:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -43,22 +43,22 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: store
+  name: bookManagement
   labels:
-    app: store
+    app: bookManagement
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: store
+      app: bookManagement
   template:
     metadata:
       labels:
-        app: store
+        app: bookManagement
     spec:
       containers:
-        - name: store
-          image: username/store:latest
+        - name: bookManagement
+          image: username/bookManagement:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -83,22 +83,62 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rider
+  name: point
   labels:
-    app: rider
+    app: point
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rider
+      app: point
   template:
     metadata:
       labels:
-        app: rider
+        app: point
     spec:
       containers:
-        - name: rider
-          image: username/rider:latest
+        - name: point
+          image: username/point:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: view
+  labels:
+    app: view
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: view
+  template:
+    metadata:
+      labels:
+        app: view
+    spec:
+      containers:
+        - name: view
+          image: username/view:latest
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -125,15 +165,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: order
+  name: bookRental
   labels:
-    app: order
+    app: bookRental
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: order
+    app: bookRental
 
 
 ---
@@ -142,15 +182,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: store
+  name: bookManagement
   labels:
-    app: store
+    app: bookManagement
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: store
+    app: bookManagement
 
 
 ---
@@ -159,13 +199,30 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rider
+  name: point
   labels:
-    app: rider
+    app: point
 spec:
   ports:
     - port: 8080
       targetPort: 8080
   selector:
-    app: rider
+    app: point
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: view
+  labels:
+    app: view
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: view
 

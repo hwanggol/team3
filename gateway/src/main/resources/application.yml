@@ -8,18 +8,22 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: order
+        - id: bookRental
           uri: http://localhost:8081
           predicates:
-            - Path=/orders/**, 
-        - id: store
+            - Path=/bookRentals/**, 
+        - id: bookManagement
           uri: http://localhost:8082
           predicates:
-            - Path=, 
-        - id: rider
+            - Path=/bookManagements/**, 
+        - id: point
           uri: http://localhost:8083
           predicates:
-            - Path=, 
+            - Path=/points/**, 
+        - id: view
+          uri: http://localhost:8084
+          predicates:
+            - Path=, /lists/**
         - id: frontend
           uri: http://localhost:8080
           predicates:
@@ -43,18 +47,22 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: order
-          uri: http://order:8080
+        - id: bookRental
+          uri: http://bookRental:8080
           predicates:
-            - Path=/orders/**, 
-        - id: store
-          uri: http://store:8080
+            - Path=/bookRentals/**, 
+        - id: bookManagement
+          uri: http://bookManagement:8080
           predicates:
-            - Path=, 
-        - id: rider
-          uri: http://rider:8080
+            - Path=/bookManagements/**, 
+        - id: point
+          uri: http://point:8080
           predicates:
-            - Path=, 
+            - Path=/points/**, 
+        - id: view
+          uri: http://view:8080
+          predicates:
+            - Path=, /lists/**
         - id: frontend
           uri: http://frontend:8080
           predicates:
