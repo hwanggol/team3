@@ -20,6 +20,24 @@ public class BookRentalController {
 
 
 
+    @RequestMapping(value = "bookRentals/{id}/rent",
+        method = RequestMethod.PUT,
+        produces = "application/json;charset=UTF-8")
+    public BookRental rent(@PathVariable(value = "id") Long id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+            System.out.println("##### /bookRental/rent  called #####");
+            Optional<BookRental> optionalBookRental = bookRentalRepository.findById(id);
+            
+            optionalBookRental.orElseThrow(()-> new Exception("No Entity Found"));
+            BookRental bookRental = optionalBookRental.get();
+            bookRental.rent();
+            
+            bookRentalRepository.save(bookRental);
+            return bookRental;
+            
+    }
+    
+
+
 
     @RequestMapping(value = "bookRentals/{id}/reserve",
         method = RequestMethod.PUT,
@@ -38,6 +56,24 @@ public class BookRentalController {
     }
     
 
+
+
+    @RequestMapping(value = "bookRentals/{id}/returnbook",
+        method = RequestMethod.PUT,
+        produces = "application/json;charset=UTF-8")
+    public BookRental returnBook(@PathVariable(value = "id") Long id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+            System.out.println("##### /bookRental/returnBook  called #####");
+            Optional<BookRental> optionalBookRental = bookRentalRepository.findById(id);
+            
+            optionalBookRental.orElseThrow(()-> new Exception("No Entity Found"));
+            BookRental bookRental = optionalBookRental.get();
+            bookRental.returnBook();
+            
+            bookRentalRepository.save(bookRental);
+            return bookRental;
+            
+    }
+    
 
 
 

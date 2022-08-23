@@ -1,7 +1,5 @@
 package team.domain;
 
-import team.domain.Rented;
-import team.domain.Returned;
 import team.BookRentalApplication;
 import javax.persistence.*;
 import java.util.List;
@@ -68,16 +66,6 @@ public class BookRental  {
 
     @PostPersist
     public void onPostPersist(){
-
-
-        Rented rented = new Rented(this);
-        rented.publishAfterCommit();
-
-
-
-        Returned returned = new Returned(this);
-        returned.publishAfterCommit();
-
         // Get request from BookManagement
         //team.external.BookManagement bookManagement =
         //    Application.applicationContext.getBean(team.external.BookManagementService.class)
@@ -92,9 +80,19 @@ public class BookRental  {
 
 
 
+    public void rent(){
+        Rented rented = new Rented(this);
+        rented.publishAfterCommit();
+
+    }
     public void reserve(){
         Reserved reserved = new Reserved(this);
         reserved.publishAfterCommit();
+
+    }
+    public void returnBook(){
+        Returned returned = new Returned(this);
+        returned.publishAfterCommit();
 
     }
     public void cancel(){

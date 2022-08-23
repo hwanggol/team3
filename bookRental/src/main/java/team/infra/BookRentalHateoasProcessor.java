@@ -11,7 +11,9 @@ public class BookRentalHateoasProcessor implements RepresentationModelProcessor<
 
     @Override
     public EntityModel<BookRental> process(EntityModel<BookRental> model) {
+        model.add(Link.of(model.getRequiredLink("self").getHref() + "/rent").withRel("rent"));
         model.add(Link.of(model.getRequiredLink("self").getHref() + "/reserve").withRel("reserve"));
+        model.add(Link.of(model.getRequiredLink("self").getHref() + "/returnbook").withRel("returnbook"));
         model.add(Link.of(model.getRequiredLink("self").getHref() + "/cancel").withRel("cancel"));
 
         

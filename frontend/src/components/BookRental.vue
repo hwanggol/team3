@@ -67,9 +67,25 @@
                     v-if="!editMode"
                     color="deep-purple lighten-2"
                     text
+                    @click="rent"
+            >
+                Rent
+            </v-btn>
+            <v-btn
+                    v-if="!editMode"
+                    color="deep-purple lighten-2"
+                    text
                     @click="reserve"
             >
                 Reserve
+            </v-btn>
+            <v-btn
+                    v-if="!editMode"
+                    color="deep-purple lighten-2"
+                    text
+                    @click="returnBook"
+            >
+                ReturnBook
             </v-btn>
             <v-btn
                     v-if="!editMode"
@@ -210,10 +226,48 @@
             change(){
                 this.$emit('input', this.value);
             },
+            async rent() {
+                try {
+                    if(!this.offline) {
+                        var temp = await axios.put(axios.fixUrl(this.value._links['rent'].href))
+                        for(var k in temp.data) {
+                            this.value[k]=temp.data[k];
+                        }
+                    }
+
+                    this.editMode = false;
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
             async reserve() {
                 try {
                     if(!this.offline) {
                         var temp = await axios.put(axios.fixUrl(this.value._links['reserve'].href))
+                        for(var k in temp.data) {
+                            this.value[k]=temp.data[k];
+                        }
+                    }
+
+                    this.editMode = false;
+                } catch(e) {
+                    this.snackbar.status = true
+                    if(e.response && e.response.data.message) {
+                        this.snackbar.text = e.response.data.message
+                    } else {
+                        this.snackbar.text = e
+                    }
+                }
+            },
+            async returnBook() {
+                try {
+                    if(!this.offline) {
+                        var temp = await axios.put(axios.fixUrl(this.value._links['returnbook'].href))
                         for(var k in temp.data) {
                             this.value[k]=temp.data[k];
                         }
